@@ -48,29 +48,24 @@ we will finally use Client-1 again, we are going to add it to our domain for non
   
 - Go back to azure an copy the Domain Controllers private ip address. Then go to client-1 in azure, click networking, networking settings, click the blue text which should have text above it reading "Network interface / IP configuration" and on the left select DNS servers, change it to custom and in the add DNS server box input domain controllers private ip address and hit save. This has a tendency to not save for some reason if you pasted it using Control+V, try inputting the numbers manually. After this restart the client-1 VM.
 
-- In client-1 on remote desktop, right click the windows icon in the bottom left go to system and put it in full screen then on the right hit "Rename this pc (advanced)" in the application that opened click change, change it to a member of domain, then input ILoveThisDomain.com or your own domain name
+- Log onto client-1 with remote desktop, right click the windows icon in the bottom left go to system and put it in full screen then on the right hit "Rename this pc (advanced)" in the application that opened click change, change it to a member of domain, then input ILoveThisDomain.com or your own domain name.
 
-  
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
+- After clicking enter it will ask you to input creditials of someone within the domain, use the user name and password you set up the domain controller VM with. After hitting ok you will hear a sound play in a few seconds but nothing pop up, this confirms you did it right. Restart the VM again.
 
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
+- Open the remote desktop with domain controller on it, open active directory users and computers and drop down IloveThisDomain.com go to the computers file and ensure you see Client-1 there. like previously, create a new organizational folder in ILoveThisDomain.com and name it _CLIENTS, drag Client-1 from the Computers file there.
 
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
+- Log back into Client-1 with ILoveThisDomain\jane_Admin, go to system again, and on the left scroll to remote desktop settings, click the blue text underneath user accounts and click add, type: "Domain Users" click ok twice.
+
+If everything is done correctly we can now log into Client-1 as a non admin user, unfortunately we have no one else to test this out with right now, so lets make a bunch with a script. 
+
+- Return to the Domain controller in remote desktop, and click on the windows icon and search for powershell ISE, right click it and open as an administrator, click file and new.
+
+- Use this link and copy all the code in it. https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1
+
+- Paste this code into PowerShell ISE and go to line 3 in the code, set it to 1000 instead of 1000 and hit run or F5 on your keyboard. You can close it when its done.
+
+- Open active Directory Users and Computers again, click on the employees folder and copy or write down the name of any employee. EX: tic.kat
+
+- try loggin into client-1 with the username ILoveThisDomain.com\(the employees username, like tic.kat) the password will be "Password1"
+
+  Congratulations, you are finished setting up Active Directory! 
