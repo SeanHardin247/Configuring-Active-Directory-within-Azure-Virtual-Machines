@@ -37,9 +37,20 @@ This tutorial outlines the implementation of Active Directory within Azure Virtu
   
 - You will be kicked from the remote desktop session because the computer needs to restart, log back into it with the user name ILoveThisDomain.com\(the user name you made the vm with). if you chose a different domain name use that instead, the password will be the same.
 
-- Open Active Directory Users and Computers and right click on your domain name. Hover over new and press organizational unit. Name it _EMPLOYEES. Repeat this except name this one _ADMINS
 <h2>Deployment and Configuration Steps</h2>
+Now we have active directory installed and are going to practice a few things like adding people and computers to the domain
 
+- Open Active Directory Users and Computers and right click on your domain name. Hover over new and press organizational unit. Name it _EMPLOYEES. Repeat this except name this one _ADMINS. Right click the admins folder and hover over new and add a InerOrgPerson.
+
+- Name this person "Jane Doe" and in the User logon name input "jane_Admin" make the password "Password1" and uncheck the box that says "User must change password at next logon" Right click on jane doe after adding and select properties, Member of, add, type Domain Admins, hit ok, and click apply and ok, then you can sign out of the remote desktop session and relog as ILoveThisDomain\jane_Admin
+
+we will finally use Client-1 again, we are going to add it to our domain for non admin users
+  
+- Go back to azure an copy the Domain Controllers private ip address. Then go to client-1 in azure, click networking, networking settings, click the blue text which should have text above it reading "Network interface / IP configuration" and on the left select DNS servers, change it to custom and in the add DNS server box input domain controllers private ip address and hit save. This has a tendency to not save for some reason if you pasted it using Control+V, try inputting the numbers manually. After this restart the client-1 VM.
+
+- In client-1 on remote desktop, right click the windows icon in the bottom left go to system and put it in full screen then on the right hit "Rename this pc (advanced)" in the application that opened click change, change it to a member of domain, then input ILoveThisDomain.com or your own domain name
+
+  
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
